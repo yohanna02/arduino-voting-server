@@ -1,16 +1,16 @@
 import path from "path";
 import { google } from "googleapis";
 import dotenv from "dotenv";
+import serviceAccountKeyFile from "./google-config";
 
 dotenv.config();
 
-const serviceAccountKeyFile = path.join(__dirname, "./voter-data-414711-f4987e708146.json");
 const sheetId = process.env.SHEET_ID as string;
 const tabName = process.env.TAB_NAME as string;
 
 async function _getGoogleSheetClient() {
     const auth = new google.auth.GoogleAuth({
-        keyFile: serviceAccountKeyFile,
+        credentials: serviceAccountKeyFile,
         scopes: ["https://www.googleapis.com/auth/spreadsheets"],
     });
     const authClient = await auth.getClient();

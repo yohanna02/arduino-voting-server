@@ -22,6 +22,7 @@ app.post("/vote", async function (req, res) {
         await _writeGoogleSheet("A2:C", [[name, id, party]]);
         res.send("Voted Successfully");
     } catch (error) {
+        console.log(error)
         res.send("Failed to vote");
     }
 });
