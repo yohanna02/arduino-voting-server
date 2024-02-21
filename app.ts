@@ -55,7 +55,7 @@ app.get("/results", async function (req, res) {
         //add the winner to google sheet
         await _writeGoogleSheet("A2:C", [["Winner", `Party: ${winner}`, `Votes: ${results[winner]}`]]);
     
-        res.send(`winner: ${winner} with ${results[winner]} votes`);
+        res.send(`Party ${winner} with ${results[winner]} votes`);
     } catch (error) {
         res.send("Failed to get results");
     }
