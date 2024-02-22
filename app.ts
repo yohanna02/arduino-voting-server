@@ -22,7 +22,7 @@ app.post("/vote", async function (req, res) {
         await _writeGoogleSheet("A2:C", [[name, id, party]]);
         res.send("Voted Successfully");
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.send("Failed to vote");
     }
 });
@@ -57,7 +57,7 @@ app.get("/results", async function (req, res) {
     
         res.send(`Party ${winner} with ${results[winner]} votes`);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.send("Failed to get results");
     }
 });
@@ -67,7 +67,7 @@ app.get("/clear", async function (req, res) {
         await _clearGoogleSheet("A2:C");
         res.send("Cleared Successfully");
     } catch (error) {
-        console.log(error);
+        console.error(error);
         res.send("Failed to clear");
     }
 });
