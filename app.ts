@@ -44,16 +44,27 @@ app.get("/results", async function (req, res) {
             return res.send("No votes yet");
         }
     
-        //get the winner
-        const winner = Object.keys(results).reduce((acc, party) => {
-            if (acc === "" || results[party] > results[acc]) {
-                return party;
+        //get the winner and handle draw
+        let winner = "";
+        let maxVotes = 0;
+        for (const party in results) {
+            if (results[party] > maxVotes) {
+                winner = party;
+                maxVotes = results[party];
+            } else if (results[party] === maxVotes) {
+                winner += `, ${party}`;
             }
-            return acc;
-        }, "");
+        }
+
+        // const winner = Object.keys(results).reduce((acc, party) => {
+        //     if (acc === "" || results[party] > results[acc]) {
+        //         return party;
+        //     }
+        //     return acc;
+        // }, "");
         
-        //add the winner to google sheet
-        await _writeGoogleSheet("A2:C", [["Winner", `Party: ${winner}`, `Votes: ${results[winner]}`]]);
+        // //add the winner to google sheet
+        // await _writeGoogleSheet("A2:C", [["Winner", `Party: ${winner}`, `Votes: ${results[winner]}`]]);
     
         res.send(`Party ${winner} with ${results[winner]} votes`);
     } catch (error) {
